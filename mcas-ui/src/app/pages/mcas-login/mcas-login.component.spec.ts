@@ -1,7 +1,7 @@
 import { SharedModule } from './../../shared.module';
 import { HttpClient } from '@angular/common/http';
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -11,7 +11,7 @@ describe('McasLoginComponent', () => {
   let component: McasLoginComponent;
   let fixture: ComponentFixture<McasLoginComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ McasLoginComponent ],
       imports: [SharedModule]
