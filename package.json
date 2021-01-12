@@ -1,0 +1,26 @@
+{
+  "name": "mcas",
+  "version": "1.0.0",
+  "description": "A web application that used to manage Minecraft server & Discord group",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redsuns-chan-hk/minecraft-admin-system.git"
+  },
+  "keywords": [
+    "minecraft",
+    "admin"
+  ],
+  "author": "RedSuns Chan",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/redsuns-chan-hk/minecraft-admin-system/issues"
+  },
+  "homepage": "https://github.com/redsuns-chan-hk/minecraft-admin-system#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
