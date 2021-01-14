@@ -4,7 +4,7 @@
   "description": "A web application that used to manage Minecraft server & Discord group",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "nodemon index.js"
   },
   "repository": {
     "type": "git",
