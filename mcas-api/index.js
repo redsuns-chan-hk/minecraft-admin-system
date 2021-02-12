@@ -3,29 +3,31 @@
  */
 
 const express = require('express')
+const database = require('./src/database')
+const fs = require('fs')
+
+/* Remeber to create your own 'token.txt' when deploy on your server. */
+const token = fs.readFileSync('./token.txt', 'UTF8')
+
+/* The deployment configuration file of the system. */
+const config = require("./config.json")
+
+/* Include some bot actions for the user to interact with. */
+const bot = require('./src/discord')
+
 const server = express()
-const port = 3000
 
-const discord = require("discord.js");
-const client = new discord.Client();
-const { prefix, token } = require("./discord-config.json");
-
-client.on('ready', () => {
-	console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on('message', msg => {
-	if (msg.content === 'ping') {
-		msg.reply('Pong!');
-	}
-});
-
-client.login(token);
-
-server.get('/', (req, res) => {
-	res.send('Hello World!')
+server.use('/test', (req, res) => {
+	bot.users.fetch('338706296436162561', false).then(user => {
+		user.send('SURPRISE MADAFAKA')
+	}).catch(reason => {
+		console.error(reason)
+	})
 })
 
-server.listen(port, () => {
-	console.log(`Minecraft Admin System Started At: http://localhost:${port}`)
+server.listen(config.server.port, () => {
+	console.log(`Minecraft Admin System Started At: http://localhost:${config.server.port}`)
+	console.log('Start Login to Discord')
+	bot.login(token)
+	database.connect()
 })
