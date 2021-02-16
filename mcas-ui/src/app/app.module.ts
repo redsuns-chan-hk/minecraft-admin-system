@@ -5,6 +5,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { AppCommonModule } from './common/common.module';
 
 @NgModule({
   declarations: [
@@ -13,8 +16,11 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     SharedModule,
-    PagesModule
+    AppCommonModule,
+    PagesModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

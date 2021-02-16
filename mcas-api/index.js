@@ -13,12 +13,14 @@ const token = fs.readFileSync('./token.txt', 'UTF8')
 const config = require("./config.json")
 
 /* Include some bot actions for the user to interact with. */
-const bot = require('./src/discord')
+const discord = require('./src/discord')
 
 const server = express()
 
+server.use('/member', require('./api/member'))
+
 server.use('/test', (req, res) => {
-	bot.users.fetch('338706296436162561', false).then(user => {
+	discord.users.fetch('338706296436162561', false).then(user => {
 		user.send('SURPRISE MADAFAKA')
 	}).catch(reason => {
 		console.error(reason)
@@ -28,6 +30,6 @@ server.use('/test', (req, res) => {
 server.listen(config.server.port, () => {
 	console.log(`Minecraft Admin System Started At: http://localhost:${config.server.port}`)
 	console.log('Start Login to Discord')
-	bot.login(token)
+	discord.login(token)
 	database.connect()
 })

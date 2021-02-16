@@ -6,4 +6,4 @@ router.get('apply', (req, res) => {
     
 })
 
-module.export = router
+module.exports = router

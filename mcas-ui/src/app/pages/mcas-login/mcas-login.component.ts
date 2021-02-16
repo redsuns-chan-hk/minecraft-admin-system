@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-mcas-login',
@@ -9,9 +10,21 @@ import { HttpClient } from '@angular/common/http';
 })
 export class McasLoginComponent implements OnInit {
 
+  public loginNameControl: FormControl;
+  public passwordControl: FormControl;
+  public loginFormGroup: FormGroup;
+
+
   constructor(
     public http: HttpClient
-  ) { }
+  ) {
+    this.loginNameControl = new FormControl();
+    this.passwordControl = new FormControl();
+    this.loginFormGroup = new FormGroup({
+      loginName: this.loginNameControl,
+      password: this.passwordControl
+    });
+  }
 
   ngOnInit(): void {
   }
