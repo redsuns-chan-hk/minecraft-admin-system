@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: McasLoginComponent
+  },
+  { /* To Avoid 404 Error */
+    path: '**',
+    component: HomeComponent
   }
 ];
 

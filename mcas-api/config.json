@@ -8,5 +8,12 @@
         "database": "mcas",
         "username": "",
         "password": ""
+    },
+    "minecraft": {
+        "host": "pekomiko.land",
+        "port": "25575"
+    },
+    "channels": {
+        "console": "777613214288314408"
     }
 }
