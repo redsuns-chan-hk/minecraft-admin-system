@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { MemberApplicationComponent } from './pages/member-application/member-application.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: McasLoginComponent
+  },
+  {
+    path: 'apply',
+    component: MemberApplicationComponent
   },
   { /* To Avoid 404 Error */
     path: '**',

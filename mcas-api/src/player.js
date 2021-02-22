@@ -30,7 +30,7 @@ class Player {
 
                     let logBody = lineContents[1].trim()
 
-                    let playerName = logBody.split(' ')[3]
+                    let playerName = logBody.split(' ')[3].replace('\\', '').trim()
                     console.log('Player [' + playerName + '] logged in. Time: [' + loginTime.toString() + ']')
 
                     if (this.loginListeners.length > 0) {

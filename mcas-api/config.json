@@ -15,5 +15,8 @@
     },
     "channels": {
         "console": "777613214288314408"
+    },
+    "oauth": {
+        "api": "/oauth"
     }
 }

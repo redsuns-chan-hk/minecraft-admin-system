@@ -1,4 +1,4 @@
 .vscode
 node_modules
-rcon-password.txt
-token.txt
+.DS_Store
+*.txt
