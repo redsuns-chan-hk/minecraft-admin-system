@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { AppCommonModule } from './common/common.module';
+import { SplashService } from './service/splash.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,6 @@ import { AppCommonModule } from './common/common.module';
     PagesModule,
     BrowserAnimationsModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

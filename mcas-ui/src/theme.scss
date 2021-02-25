@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+/* ======== Angular material custom themes ======== */
+$pekomikoland-primary: mat-palette($mat-light-blue, 300, 700, A100);
+$pekomikoland-accent: mat-palette($mat-pink, 300, 700, A100);
+$pekomikoland-warn: mat-palette($mat-red);
+
+$pekomikoland-theme: mat-light-theme($pekomikoland-primary, $pekomikoland-accent, $pekomikoland-warn);
+
+@include angular-material-theme($pekomikoland-theme);

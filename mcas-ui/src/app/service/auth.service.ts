@@ -12,10 +12,10 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  public retrieveDiscordToken(code: string): Promise<any> {
-    let refreshToken = window.localStorage.getItem('discord_refresh_token');
+  public retrieveDiscordToken(code: string = ''): Promise<any> {
+    let refreshToken = window.localStorage.getItem('refresh_token');
     if (refreshToken != null) {
-      return this.http.post(environment.apiEndpoint + '/discord/refresh', {
+      return this.http.post(environment.apiEndpoint + '/discord/auth', {
         token: refreshToken
       }).toPromise();
     } else {

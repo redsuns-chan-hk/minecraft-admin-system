@@ -1,4 +1,16 @@
 
 section {
   text-align: center;
+  margin: auto;
+  min-height: 50vh;
+}
+
+#memberRegisterForm > * {
+  margin: auto;
+  display: block;
+}
+
+mat-form-field {
+  width: 60%;
+  margin: 16px;
 }

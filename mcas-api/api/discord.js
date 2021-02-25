@@ -16,17 +16,23 @@ router.post('/auth', (req, res) => {
 
     /* Refresh Discord access token with Discord refresh token. */
     if (req.body.token != undefined) {
-        let uri = new URL('https://discord.com/api/oauth2/refresh')
+        let uri = new URL('https://discord.com/api/oauth2/token')
         let params = {
             client_id: discord_oauth2.client_id,
             client_secret: discord_oauth2.client_secret,
             grant_type: 'refresh_token',
             refresh_token: req.body.token,
-            scope: 'identify email connections'
+            scope: 'identify'
         }
         Object.keys(params).forEach(k => uri.searchParams.append(k, params[k]))
-        fetch('', {
-            method: 'POST'
+        fetch(uri.toString(), {
+            method: 'POST',
+            body: uri.toString().split('?')[1],
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => response.json()).then(json => {
+            res.status(200).json(json)
         })
     } else {
         /* Get a new discord token with authorization code. */
@@ -55,7 +61,7 @@ router.post('/auth', (req, res) => {
 })
 
 router.get('token', (req, res) => {
-    console.log(req.params)
+    fetch()
 })
 
 module.exports = router;

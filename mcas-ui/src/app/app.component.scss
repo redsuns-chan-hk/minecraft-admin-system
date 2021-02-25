@@ -1,4 +1,12 @@
 
+.show {
+  display: block !important;
+}
+
+.hide {
+  display: none !important;
+}
+
 app-header {
   display: block;
   margin: 8px;
@@ -6,13 +14,21 @@ app-header {
 
 section {
   display: block;
+  position: relative;
   margin: 8px;
   margin-bottom: 150px;
 }
 
 app-footer {
   display: block;
+  height: fit-content;
+  width: fit-content;
   margin: 0px;
   padding: 0px;
 }
 
+.spinner {
+  position: relative;
+  display: block;
+  height: 60vh;
+}

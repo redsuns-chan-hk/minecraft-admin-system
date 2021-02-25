@@ -1,5 +1,8 @@
 <app-header></app-header>
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <div class="spinner" class="{{ splashService.enabled ? 'show' : 'hide' }}">
+    <mat-spinner class="screen-center"></mat-spinner>
+  </div>
+  <main class="{{ !splashService.enabled ? 'show' : 'hide' }}">
+    <router-outlet></router-outlet>
+  </main>
 <app-footer></app-footer>

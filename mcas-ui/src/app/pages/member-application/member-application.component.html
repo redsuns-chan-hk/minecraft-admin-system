@@ -1,6 +1,58 @@
 <section>
-  <h1>會員申請</h1>
+    <h1>會員申請</h1>
 
+    <form
+      id="memberRegisterForm"
+      [formGroup]="registerFormGroup"
+      (ngSubmit)="onClickRegister()"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Minecraft暱稱</mat-label>
+        <input
+          matInput
+          placeholder="請輸入你的Minecraft遊戲暱稱"
+          name="minecraftName"
+          formControlName="minecraftName"
+        />
+      </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>加入原因</mat-label>
+        <input
+          matInput
+          placeholder="請輸入你加入本社的原因"
+          name="enterReason"
+          formControlName="enterReason"
+        />
+      </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>喜歡哪位vtuber以及喜歡的契機</mat-label>
+        <input
+          matInput
+          placeholder="請輸入你喜歡的vtuber名稱／暱稱，和你會喜歡看他／她的契機"
+          name="favouriteVtubers"
+          formControlName="favouriteVtubers">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>從何得知本社？</mat-label>
+        <input
+          matInput
+          placeholder="請仔細填寫你在何處得知本社的存在，不接受'網上'之類模綾兩可的答案"
+          name="source"
+          formControlName="source">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>推薦人名稱</mat-label>
+        <input
+          matInput
+          placeholder="請輸入推薦人的Discord／Minecraft名稱，如沒有請留空"
+          name="referer"
+          formControlName="referer">
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button>遞交申請</button>
+    </form>
 </section>
