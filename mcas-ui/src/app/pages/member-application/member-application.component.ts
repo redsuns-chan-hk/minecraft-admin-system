@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@mcas/service/auth.service';
+import { MemberService } from '@mcas/service/member.service';
 import { SplashService } from '@mcas/service/splash.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -32,7 +33,8 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private auth: AuthService,
     private snackbar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private memberService: MemberService,
   ) {
     this.registerFormDiscordId = new FormControl('', [ Validators.required ]);
     this.registerFormDiscordName = new FormControl('', [ Validators.required ]);
@@ -113,6 +115,13 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
     this.splashService.enable();
     if (this.registerFormGroup.valid) {
       console.log("Clicked: REGISTER");
+      this.memberService.register().toPromise().then((res) => {
+        console.log(res);
+      }, (reason) => {
+        console.error(reason);
+      }).finally(() => {
+        this.splashService.disable();
+      })
     } else {
       console.error('Register Form Invalid.');
     }

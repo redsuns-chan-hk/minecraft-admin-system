@@ -1,3 +1,22 @@
-<a href="/">
-  <img alt="Nousagi Kensetsu Logo" class="logo" src="../../../assets/images/nousagi-kensetsu-logo.png">
-</a>
+<div id="header-wrapper">
+  <div id="logo">
+    <a href="/">
+      <img alt="Nousagi Kensetsu Logo" class="logo" src="../../../assets/images/nousagi-kensetsu-logo.png">
+    </a>
+  </div>
+  <div id="navigator">
+    <div id="desktop-menu">
+      <nav>
+        <ul>
+          <li><button mat-button (click)="goToHome()">首頁</button></li>
+          <li><button mat-button (click)="goToHome()">最新資訊</button></li>
+          <li><button mat-button (click)="goToHome()">關於我們</button></li>
+          <li><button mat-button (click)="goToHome()">私隱權政策</button></li>
+        </ul>
+      </nav>
+    </div>
+    <div id="mobile-menu">
+      <div id="menu-icon"><button mat-button (click)="onClickMenu()">☰</button></div>
+    </div>
+  </div>
+</div>

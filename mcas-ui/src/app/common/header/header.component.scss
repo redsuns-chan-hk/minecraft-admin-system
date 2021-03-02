@@ -1,5 +1,63 @@
 
+#header-wrapper {
+  width: 100%;
+  display: block;
+}
+
+#header-wrapper > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#logo {
+  width: 50%;
+}
+
+#navigator {
+  width: 50%;
+  text-align: right;
+}
+
 .logo {
   width: 240px;
   padding: 8px;
+}
+
+nav li {
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+nav li button {
+  margin: 0px;
+  padding: 8px 2vw 8px 2vw;
+}
+
+#menu-icon button {
+  padding: 0px;
+  font-size: 1.5rem;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+@media only screen and (min-width: 801px) {
+  #desktop-menu {
+    display: block;
+  }
+
+  #mobile-menu {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #desktop-menu {
+    display: none;
+  }
+
+  #mobile-menu {
+    display: block;
+  }
 }
