@@ -15,6 +15,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public goToAbout(): void {
+    this.router.navigateByUrl('/about');
+  }
+
   public goToHome(): void {
     this.router.navigateByUrl('/');
   }

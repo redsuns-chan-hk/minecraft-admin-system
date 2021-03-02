@@ -1,4 +1,4 @@
-import { SharedModule } from './../../shared.module';
+import { SharedModule } from '../../../shared.module';
 import { HttpClient } from '@angular/common/http';
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';

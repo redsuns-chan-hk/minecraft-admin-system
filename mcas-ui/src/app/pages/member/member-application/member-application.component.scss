@@ -5,6 +5,10 @@ section {
   min-height: 50vh;
 }
 
+button[type="submit"] {
+  color: white;
+}
+
 #memberRegisterForm > * {
   margin: auto;
   display: block;
@@ -13,4 +17,15 @@ section {
 mat-form-field {
   width: 60%;
   margin: 16px;
+}
+
+@media screen and (max-width: 720px) {
+  mat-form-field {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  button {
+    width: 100%;
+  }
 }

@@ -2,13 +2,15 @@
 const express = require('express')
 const router = express.Router()
 
-/* On Click Connect Discord Button */
-router.get('auth', (req, res) => {
-    console.log(req.body)
-})
+const MemberApplication = require('../model/member-application.model')
 
-router.get('apply', (req, res) => {
-    
+router.post('/register', (req, res) => {
+    console.log(req.body)
+    return res.status(200).json({
+        ok: true,
+        message: 'success',
+        details: req.body
+    })
 })
 
 module.exports = router
