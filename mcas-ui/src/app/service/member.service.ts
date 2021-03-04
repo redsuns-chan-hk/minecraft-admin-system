@@ -12,9 +12,7 @@ export class MemberService {
     private http: HttpClient
   ) { }
 
-  public register(): Observable<any> {
-    return this.http.post(environment.apiEndpoint + '/member/register', {
-
-    });
+  public register(formValue: any): Observable<any> {
+    return this.http.post(environment.apiEndpoint + '/member/register', formValue);
   }
 }

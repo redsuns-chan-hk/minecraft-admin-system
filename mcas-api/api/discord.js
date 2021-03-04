@@ -3,15 +3,16 @@ const express = require('express')
 const fetch = require('node-fetch')
 const router = express.Router()
 
+const constants = require('../src/data/app-constants')
+const HttpStatus = require('../src/data/http-status')
+const result = require('../src/result')
+
 const discord_oauth2 = require('../secure/discord-oauth2.json')
 
 router.post('/auth', (req, res) => {
 
     if (req.body == undefined) {
-        return res.status(500).json({
-            ok: false,
-            message: "req.body === undefined"
-        })
+        return result.send(res, HttpStatus.UNAUTHORIZED, false, "No Authorization Info Found.", null)
     }
 
     /* Refresh Discord access token with Discord refresh token. */

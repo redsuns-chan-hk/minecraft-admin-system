@@ -1,11 +1,12 @@
 <section class="app-content">
     <h1>會員申請</h1>
-
     <form
       id="memberRegisterForm"
       [formGroup]="registerFormGroup"
       (ngSubmit)="onClickRegister()"
     >
+      <input type="hidden" name="discordId" formControlName="discordId">
+      <input type="hidden" name="discordName" formControlName="discordName">
       <mat-form-field appearance="outline">
         <mat-label>Minecraft暱稱</mat-label>
         <input

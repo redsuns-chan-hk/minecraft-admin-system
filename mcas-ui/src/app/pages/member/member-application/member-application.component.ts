@@ -44,9 +44,6 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
     this.registerFormSource = new FormControl('', [ Validators.required ]);
     this.registerFormReferer = new FormControl('');
 
-    this.registerFormDiscordId.disable();
-    this.registerFormDiscordName.disable();
-
     this.registerFormGroup = new FormGroup({
       discordId: this.registerFormDiscordId,
       discordName: this.registerFormDiscordName,
@@ -61,7 +58,7 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log("MemberApplicationComponent::ngOnInit()");
 
-    console.log("Splash Enabled");
+
     this.splashService.enable();
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       let paramCode = params['code'];
@@ -89,7 +86,7 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
         } else {
           this.code = paramCode;
 
-          console.log("Splash Enabled");
+
           this.splashService.enable();
           this.auth.retrieveDiscordToken(this.code).then((res) => {
             if (res.error_description == 'Invalid "code" in request.') {
@@ -105,17 +102,15 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("Splash Disabled");
+
     this.splashService.disable();
     this.paramsSubscription.unsubscribe();
   }
 
   public onClickRegister(): void {
-    console.log("Splash Enabled");
     this.splashService.enable();
     if (this.registerFormGroup.valid) {
-      console.log("Clicked: REGISTER");
-      this.memberService.register().toPromise().then((res) => {
+      this.memberService.register(this.registerFormGroup.value).toPromise().then((res) => {
         console.log(res);
       }, (reason) => {
         console.error(reason);
@@ -125,7 +120,6 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
     } else {
       console.error('Register Form Invalid.');
     }
-    console.log("Splash Disabled");
     this.splashService.disable();
   }
 
@@ -169,14 +163,14 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
   private getDiscordInfoByToken(token: string | null): void {
     if (token == undefined || token == null) {
       console.error('GetDiscordInfoByToken(): TOKEN == NULL');
-      console.log("Splash Disabled");
+
       this.splashService.disable();
       this.redirectToDiscordAuthPage();
     } else {
-      console.log("Splash Enabled");
+
       this.splashService.enable();
       this.auth.getDiscordInfoByToken(token).subscribe(infoResult => {
-        console.log("Splash Disabled");
+
         this.splashService.disable();
         if (infoResult != undefined) {
           let userId = infoResult.id;
@@ -194,7 +188,7 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
   }
 
   private redirectToDiscordAuthPage() {
-    console.log("Splash Disabled");
+
     this.splashService.disable();
     window.location.href = environment.discord.authorizePage;
   }

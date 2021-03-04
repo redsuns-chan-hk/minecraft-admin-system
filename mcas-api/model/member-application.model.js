@@ -3,9 +3,10 @@ const mongoose = require('mongoose')
 
 const MemberApplicationSchema = new mongoose.Schema({
     discordId: String,
-    minecraftId: String,
-    reason: String,
-    favouriteVtuber: String,
+    discordName: String,
+    minecraftName: String,
+    enterReason: String,
+    favouriteVtubers: String,
     source: String,
     referer: String
 })
