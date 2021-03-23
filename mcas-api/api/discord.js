@@ -3,9 +3,12 @@ const express = require('express')
 const fetch = require('node-fetch')
 const router = express.Router()
 
-const constants = require('../src/data/app-constants')
-const HttpStatus = require('../src/data/http-status')
+const constants = require('../data/app-constants')
+const HttpStatus = require('../data/http-status')
 const result = require('../src/result')
+
+const discord = require('discord.js')
+const guild = new discord.Guild()
 
 const discord_oauth2 = require('../secure/discord-oauth2.json')
 
@@ -23,7 +26,7 @@ router.post('/auth', (req, res) => {
             client_secret: discord_oauth2.client_secret,
             grant_type: 'refresh_token',
             refresh_token: req.body.token,
-            scope: 'identify'
+            scope: 'identify email connections guilds'
         }
         Object.keys(params).forEach(k => uri.searchParams.append(k, params[k]))
         fetch(uri.toString(), {
@@ -45,7 +48,7 @@ router.post('/auth', (req, res) => {
                 grant_type: 'authorization_code',
                 code: req.body.code,
                 redirect_uri: 'http://127.0.0.1:4200/apply',
-                scope: 'identify'
+                scope: 'identify email connections guilds'
             }
             Object.keys(params).forEach(k => uri.searchParams.append(k, params[k]))
             fetch(uri.toString(), {
@@ -61,8 +64,8 @@ router.post('/auth', (req, res) => {
     }
 })
 
-router.get('token', (req, res) => {
-    fetch()
+router.get('/role', (req, res) => {
+    res.json(guild.roles)
 })
 
 module.exports = router;

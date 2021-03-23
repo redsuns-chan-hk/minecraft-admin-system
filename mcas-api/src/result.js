@@ -1,7 +1,7 @@
 
 const http = require("http");
-const HttpStatus = require("./http-status");
-const Constant = require("./constant");
+const HttpStatus = require("../data/http-status");
+const Constant = require("../data/app-constants");
 
 /**
  * The model class of the standard system response.

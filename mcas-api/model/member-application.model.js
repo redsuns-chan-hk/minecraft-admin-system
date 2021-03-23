@@ -8,7 +8,11 @@ const MemberApplicationSchema = new mongoose.Schema({
     enterReason: String,
     favouriteVtubers: String,
     source: String,
-    referer: String
+    referer: String,
+    status: String, // Value = PENDING, APPROVE, REJECT
+    applyDate: Date,
+    approveDate: Date,
+    approvedBy: String
 })
 
 const MemberApplication = mongoose.model('MemberApplication', MemberApplicationSchema)

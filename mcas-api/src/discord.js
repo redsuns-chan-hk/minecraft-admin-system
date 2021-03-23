@@ -9,6 +9,7 @@ client.on('ready', () => {
 })
 
 client.on('message', msg => {
+	
 	player.onLogin(client, msg)
 })
 

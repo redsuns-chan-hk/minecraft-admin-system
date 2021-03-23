@@ -23,6 +23,7 @@ const server = express()
 server.use(cors())
 server.use(bodyParser.json())
 
+server.use('/admin', require('./api/admin'))
 server.use('/discord', require('./api/discord'))
 server.use('/member', require('./api/member'))
 

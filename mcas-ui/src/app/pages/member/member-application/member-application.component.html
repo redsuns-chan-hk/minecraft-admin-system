@@ -1,12 +1,13 @@
-<section class="app-content">
+<section class="app-content" *ngIf="!registerSuccess">
+  <ng-container *ngIf="!registerSuccess && !registerUserDuplicated">
     <h1>會員申請</h1>
     <form
       id="memberRegisterForm"
       [formGroup]="registerFormGroup"
       (ngSubmit)="onClickRegister()"
     >
-      <input type="hidden" name="discordId" formControlName="discordId">
-      <input type="hidden" name="discordName" formControlName="discordName">
+      <input type="hidden" name="discordId" formControlName="discordId" />
+      <input type="hidden" name="discordName" formControlName="discordName" />
       <mat-form-field appearance="outline">
         <mat-label>Minecraft暱稱</mat-label>
         <input
@@ -33,7 +34,8 @@
           matInput
           placeholder="請輸入你喜歡的vtuber名稱／暱稱，和你會喜歡看他／她的契機"
           name="favouriteVtubers"
-          formControlName="favouriteVtubers">
+          formControlName="favouriteVtubers"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -42,7 +44,8 @@
           matInput
           placeholder="請仔細填寫你在何處得知本社的存在，不接受'網上'之類模綾兩可的答案"
           name="source"
-          formControlName="source">
+          formControlName="source"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -51,9 +54,19 @@
           matInput
           placeholder="請輸入推薦人的Discord／Minecraft名稱，如沒有請留空"
           name="referer"
-          formControlName="referer">
+          formControlName="referer"
+        />
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary">遞交申請</button>
     </form>
+  </ng-container>
+
+  <ng-container *ngIf="registerSuccess">
+    <app-member-application-apply-success></app-member-application-apply-success>
+  </ng-container>
+
+  <ng-container *ngIf="registerUserDuplicated">
+    <app-apply-duplicated></app-apply-duplicated>
+  </ng-container>
 </section>

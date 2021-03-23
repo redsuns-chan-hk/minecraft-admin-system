@@ -8,6 +8,8 @@ import { MemberApplicationComponent } from './member/member-application/member-a
 import { AboutComponent } from './pekomikoland/about/about.component';
 import { PrivacyComponent } from './pekomikoland/privacy/privacy.component';
 import { NewsComponent } from './pekomikoland/news/news.component';
+import { ApplySuccessComponent } from './member/member-application/apply-success/apply-success.component';
+import { ApplyDuplicatedComponent } from './member/member-application/apply-duplicated/apply-duplicated.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { NewsComponent } from './pekomikoland/news/news.component';
     MemberApplicationComponent,
     AboutComponent,
     PrivacyComponent,
-    NewsComponent
+    NewsComponent,
+    ApplySuccessComponent,
+    ApplyDuplicatedComponent
   ]
 })
 export class PagesModule { }
