@@ -1,5 +1,6 @@
 
 const express = require('express')
+const { body, validationResult } = require('express-validator')
 const fetch = require('node-fetch')
 const router = express.Router()
 
@@ -7,10 +8,14 @@ const constants = require('../data/app-constants')
 const HttpStatus = require('../data/http-status')
 const result = require('../src/result')
 
-const discord = require('discord.js')
-const guild = new discord.Guild()
-
 const discord_oauth2 = require('../secure/discord-oauth2.json')
+
+const discord = require('../src/discord')
+const { guilds } = require('../src/discord')
+const config = require('../config.json')
+
+const MemberApplication = require('../model/member-application.model')
+const Player = require('../src/player')
 
 router.post('/auth', (req, res) => {
 
@@ -64,8 +69,64 @@ router.post('/auth', (req, res) => {
     }
 })
 
-router.get('/role', (req, res) => {
-    res.json(guild.roles)
+router.post('/user/is/admin', [
+    body('discordId').exists({checkNull: true})
+], (req, res) => {
+    const errors = validationResult(req);
+    if (! errors.isEmpty()) {
+        return result.exception(res, errors.array())
+    }
+    Player.isAdmin(discord, req.body.discordId, (isAdmin) => {
+        if (isAdmin) {
+            return result.send(res, HttpStatus.OK, true, "User is an admin", isAdmin)
+        } else {
+            return result.send(res, HttpStatus.UNAUTHORIZED, false, "User is NOT an admin", isAdmin)
+        }
+    })
+})
+
+
+/**
+ * 
+ * @api {POST} /member/is/applied IsUserAppliedMember
+ * @apiName IsUserAppliedMember
+ * @apiGroup member
+ * @apiVersion  1.0.0
+ * 
+ * 
+ * @apiParam  {String} userId The user ID of Discord
+ * @apiParam  {String} userName The user name of Discord
+ * 
+ * @apiSuccess (200) {Boolean} applied Whether user submitted an application before.
+ * 
+ * @apiParamExample  {type} Request-Example:
+ * {
+ *     userId: '1234',
+ *     userName: 'Chan Tai Ming'
+ * }
+ * 
+ * 
+ * @apiSuccessExample {type} Success-Response:
+ * {
+ *     data: true
+ * }
+ * 
+ */
+ router.post('/user/is/applied', [
+    body('discordId').exists({checkNull: true}),
+    body('discordName').exists({checkNull: true})
+], (req, res) => {
+    const errors = validationResult(req);
+    if (! errors.isEmpty()) {
+        return result.exception(res, errors.array())
+    }
+    MemberApplication.find({
+        discordId: req.body.discordId,
+        discordName: req.body.discordName
+    }).then(value => {
+        let applied = (value != undefined && value != null && value.length > 0);
+        return result.send(res, HttpStatus.OK, true, applied ? "User was applied" : "User is not applied", applied);
+    })
 })
 
 module.exports = router;

@@ -1,10 +1,10 @@
-import { McasLoginComponent } from '@mcas/pages/member/mcas-login/mcas-login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/pekomikoland/home/home.component';
-import { AuthGuard } from './auth/auth.guard';
+import { AdminAuthGuard } from './auth/admin-auth.guard';
 import { MemberApplicationComponent } from './pages/member/member-application/member-application.component';
 import { AboutComponent } from './pages/pekomikoland/about/about.component';
+import { MainPanelComponent } from './pages/admin/main-panel/main-panel.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,10 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: McasLoginComponent
+    component: MainPanelComponent,
+    canActivate: [
+      AdminAuthGuard
+    ]
   },
   {
     path: 'apply',

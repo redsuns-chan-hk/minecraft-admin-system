@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -7,7 +8,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class MemberService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   public register(formValue: any): Observable<any> {
     return this.http.post(
@@ -16,10 +20,16 @@ export class MemberService {
     );
   }
 
-  public checkAppliedBefore(userId: string, userName: string): Observable<any> {
-    return this.http.post(environment.apiEndpoint + '/member/verify/applied', {
-      userId,
-      userName,
+  public isUserApplied(discordId: string, discordName: string): Observable<any> {
+    return this.http.post(environment.apiEndpoint + '/discord/user/is/applied', {
+      discordId,
+      discordName,
+    });
+  }
+
+  public isAdmin(discordId: string): Observable<any> {
+    return this.http.post(environment.apiEndpoint + '/discord/user/is/admin', {
+      discordId
     });
   }
 }

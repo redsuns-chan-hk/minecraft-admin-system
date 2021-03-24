@@ -6,7 +6,7 @@ class Player {
     
     static loginListeners = []
     
-    static onLogin(discord, msg) {
+    static onLogin(client, msg) {
     	if (msg.content.includes(' joined ')) {
             let contents = msg.content.split('\n')
             if (contents == undefined || contents == null) {
@@ -39,7 +39,7 @@ class Player {
                         }
                     }
 
-                    this.updateApprovedPlayerParentGroup(discord, playerName, loginTime)
+                    this.updateApprovedPlayerParentGroup(client, playerName, loginTime)
                 }
 
                 /*
@@ -77,6 +77,22 @@ class Player {
         */
         // This not working...
         // discord.channels.cache.get(config.channels.console).send('lp user ' + player + ' parent info')
+    }
+
+    static isAdmin(discord, discordId, next) {
+        discord.guilds.fetch(config.guild, false, true).then(guild => {
+            guild.members.fetch(discordId).then(member => {
+                let roles = member.roles.cache.array()
+                let isAdmin = false;
+                for (let role of roles) {
+                    isAdmin = config.admins.includes(role.id)
+                    if (isAdmin) {
+                        break;
+                    }
+                }
+                next(isAdmin)
+            })
+        })
     }
 
 }

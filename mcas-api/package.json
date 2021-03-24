@@ -4,7 +4,7 @@
   "description": "A web application that used to manage Minecraft server & Discord group",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,14 @@
     "cors": "^2.8.5",
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
+    "express-validator": "^6.10.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.15",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "rcon-client": "^4.2.3"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }

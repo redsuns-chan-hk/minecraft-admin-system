@@ -7,14 +7,12 @@ import { DiscordTokenService } from '@mcas/service/discord-token.service';
 import { MemberService } from '@mcas/service/member.service';
 import { SplashService } from '@mcas/service/splash.service';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './member-application.component.html',
-  styleUrls: ['./member-application.component.scss']
+  styleUrls: ['./member-application.component.scss'],
 })
 export class MemberApplicationComponent implements OnInit, OnDestroy {
-
   private paramsSubscription: Subscription = new Subscription();
 
   public code: string = '';
@@ -39,17 +37,19 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
     private discordToken: DiscordTokenService,
     private snackbar: MatSnackBar,
     private router: Router,
-    private memberService: MemberService,
+    private memberService: MemberService
   ) {
     this.registerSuccess = false;
     this.registerUserDuplicated = false;
 
-    this.registerFormDiscordId = new FormControl('', [ Validators.required ]);
-    this.registerFormDiscordName = new FormControl('', [ Validators.required ]);
-    this.registerFormMinecraftName = new FormControl('', [ Validators.required ]);
-    this.registerFormEnterReason = new FormControl('', [ Validators.required ]);
-    this.registerFormFavouriteVtubers = new FormControl('', [ Validators.required ]);
-    this.registerFormSource = new FormControl('', [ Validators.required ]);
+    this.registerFormDiscordId = new FormControl('', [Validators.required]);
+    this.registerFormDiscordName = new FormControl('', [Validators.required]);
+    this.registerFormMinecraftName = new FormControl('', [Validators.required]);
+    this.registerFormEnterReason = new FormControl('', [Validators.required]);
+    this.registerFormFavouriteVtubers = new FormControl('', [
+      Validators.required,
+    ]);
+    this.registerFormSource = new FormControl('', [Validators.required]);
     this.registerFormReferer = new FormControl('');
 
     this.registerFormGroup = new FormGroup({
@@ -59,12 +59,12 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
       enterReason: this.registerFormEnterReason,
       favouriteVtubers: this.registerFormFavouriteVtubers,
       source: this.registerFormSource,
-      referer: this.registerFormReferer
+      referer: this.registerFormReferer,
     });
   }
 
   ngOnInit(): void {
-    console.log("MemberApplicationComponent::ngOnInit()");
+    console.log('MemberApplicationComponent::ngOnInit()');
     this.splashService.enable();
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       let paramCode = params['code'];
@@ -72,9 +72,12 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
         this.verifyStoredToken();
 
         let expires_time = this.discordToken.expiresTime.getTime().toString();
-        if (expires_time.length > 0 && parseInt(expires_time) <= new Date().getTime()) {
+        if (
+          expires_time.length > 0 &&
+          parseInt(expires_time) <= new Date().getTime()
+        ) {
           // Need to refresh the token.
-          this.auth.retrieveDiscordToken().then(response => {
+          this.auth.retrieveDiscordToken().then((response) => {
             this.createTokenStorage(response);
             this.getDiscordInfoByToken(this.discordToken.accessToken);
           });
@@ -91,7 +94,6 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
           this.redirectToDiscordAuthPage();
         } else {
           this.code = paramCode;
-
 
           this.splashService.enable();
           this.auth.retrieveDiscordToken(this.code).then((res) => {
@@ -115,18 +117,25 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
   public onClickRegister(): void {
     this.splashService.enable();
     if (this.registerFormGroup.valid) {
-      this.memberService.register(this.registerFormGroup.value).toPromise().then((res) => {
-        console.log(res);
-        if (res.detail == "RECORD_SAVE_SUCCESS") {
-          this.registerSuccess = true;
-        } else if (res.detail == "RECORD_DUPLICATED") {
-          this.registerUserDuplicated = true;
-        }
-      }, (reason) => {
-        console.error(reason);
-      }).finally(() => {
-        this.splashService.disable();
-      })
+      this.memberService
+        .register(this.registerFormGroup.value)
+        .toPromise()
+        .then(
+          (res) => {
+            console.log(res);
+            if (res.detail == 'RECORD_SAVE_SUCCESS') {
+              this.registerSuccess = true;
+            } else if (res.detail == 'RECORD_DUPLICATED') {
+              this.registerUserDuplicated = true;
+            }
+          },
+          (reason) => {
+            console.error(reason);
+          }
+        )
+        .finally(() => {
+          this.splashService.disable();
+        });
     } else {
       console.error('Register Form Invalid.');
     }
@@ -135,14 +144,25 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
 
   private verifyStoredToken(): void {
     let access_token = this.discordToken.accessToken;
-    if (access_token != null && access_token == 'undefined' && access_token.trim().length > 0) {
+    if (
+      access_token != null &&
+      access_token == 'undefined' &&
+      access_token.trim().length > 0
+    ) {
       this.cleanTokenStorage();
     } else {
       let expires_time = this.discordToken.expiresTime.getTime().toString();
-      if (expires_time != null && expires_time == 'NaN' && expires_time.trim().length > 0) {
+      if (
+        expires_time != null &&
+        expires_time == 'NaN' &&
+        expires_time.trim().length > 0
+      ) {
         this.cleanTokenStorage();
       } else {
-        if (expires_time.trim().length > 0 && parseInt(expires_time) <= new Date().getTime()) {
+        if (
+          expires_time.trim().length > 0 &&
+          parseInt(expires_time) <= new Date().getTime()
+        ) {
           this.cleanTokenStorage();
         } else {
           if (expires_time.trim().length == 0) {
@@ -172,9 +192,8 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
       this.splashService.disable();
       this.redirectToDiscordAuthPage();
     } else {
-
       this.splashService.enable();
-      this.auth.getDiscordInfoByToken(token).subscribe(infoResult => {
+      this.auth.getDiscordInfoByToken(token).subscribe((infoResult) => {
         if (infoResult != undefined) {
           let userId = infoResult.id;
           let userName = infoResult.username;
@@ -184,21 +203,37 @@ export class MemberApplicationComponent implements OnInit, OnDestroy {
 
           console.log(`Register as ${userName} (${userId})`);
 
-          this.memberService.checkAppliedBefore(userId, userName).toPromise().then(result => {
-            if (result.data == true) {
-              console.error("User Applied Already");
-              this.registerUserDuplicated = true;
-            } else {
-              console.warn("User Is Not Applied");
-              this.registerUserDuplicated = false;
-            }
-          }).catch(reason => {
-            console.error(reason);
-          }).finally(() => {
-            this.splashService.disable();
-          });
+          this.memberService
+            .isAdmin(userId)
+            .toPromise()
+            .then((isAdmin) => {
+              if (isAdmin.data) {
+                this.router.navigateByUrl('/admin');
+              } else {
+                this.memberService
+                  .isUserApplied(userId, userName)
+                  .toPromise()
+                  .then((result) => {
+                    if (result.data == true) {
+                      console.error('User Applied Already');
+                      this.registerUserDuplicated = true;
+                    } else {
+                      console.warn('User Is Not Applied');
+                      this.registerUserDuplicated = false;
+                    }
+                  })
+                  .catch((reason) => {
+                    console.error(reason);
+                  })
+                  .finally(() => {
+                    this.splashService.disable();
+                  });
+              }
+            }).finally(() => {
+              this.splashService.disable();
+            });
         } else {
-          console.error("Unable to get authorized user info.")
+          console.error('Unable to get authorized user info.');
         }
       });
     }

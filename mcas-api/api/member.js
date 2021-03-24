@@ -1,5 +1,6 @@
 
 const express = require('express')
+const { body, validationResult } = require('express-validator')
 const router = express.Router()
 
 const HttpStatus = require('../data/http-status')
@@ -39,8 +40,28 @@ const AppConstants = require('../data/app-constants')
  * 
  * 
  */
-router.post('/register', (req, res) => {
-    let application = new MemberApplication(req.body);
+router.post('/register', [
+    body('discordId').exists({checkNull: true}),
+    body('discordName').exists({checkNull: true}),
+    body('minecraftName').exists({checkNull: true}),
+    body('enterReason').exists({checkNull: true}),
+    body('favouriteVtubers').exists({checkNull: true}),
+    body('source').exists({checkNull: true}),
+    body('referer').exists({checkNull: false}),
+],(req, res) => {
+    const errors = validationResult(req);
+    if (! errors.isEmpty()) {
+        return result.exception(res, errors.array())
+    }
+    let defaultFields = {
+        status: 'PENDING',
+        applyDate: new Date(),
+        approveDate: null,
+        approvedBy: null
+    };
+    let application = new MemberApplication({...req.body, ...defaultFields});
+    
+    /* Find is there any duplicated application. */
     MemberApplication.find({
         discordId: req.body.discordId
     }).then(value => {
@@ -58,6 +79,7 @@ router.post('/register', (req, res) => {
         return result.exception(res, reason)
     })
 })
+
 /**
  * 
  * @api {GET} /member/applications Get Member Applications
@@ -81,24 +103,6 @@ router.get('/applications', (req, res) => {
     }).catch(reason => {
         console.error(reason)
         return result.exception(res, reason)
-    })
-})
-
-router.post('/verify/applied', (req, res) => {
-    if (!(req.body.userId != undefined && req.body.userId != null && req.body.userId.trim().length > 0)) {
-        return result.send(res, HttpStatus.BAD_REQUEST, false, "Missing Param: userId");
-    }
-    if (!(req.body.userName != undefined && req.body.userName != null && req.body.userName.trim().length > 0)) {
-        return result.send(res, HttpStatus.BAD_REQUEST, false, "Missing Param: userName");
-    }
-    MemberApplication.find({
-        discordId: req.body.userId,
-        discordName: req.body.userName
-    }).then(value => {
-        console.log(value);
-        let applied = (value != undefined && value != null && value.length > 0);
-        console.log('Applied = ' + applied);
-        return result.send(res, HttpStatus.OK, true, applied ? "User was applied" : "User is not applied", applied);
     })
 })
 
